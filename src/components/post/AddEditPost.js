@@ -8,7 +8,7 @@ import { ADD_SUCCESS_MESSAGE, EDIT_SUCCESS_MESSAGE } from '../../common/Utils';
 import Loader from '../../common/Loader';
 
 function AddEditPost(props) {
-    const { onHide, processPostList, ...rest } = props;
+    const { onHide, processPostList } = props;
     const { postObject = null, loading, posts = [] } = useSelector(state => state.post);
     const dispatch = useDispatch();
     const [initialValues, setInitialValues] = useState(Schema.initialValues)
@@ -22,8 +22,6 @@ function AddEditPost(props) {
         setInitialValues(tempInitialValues);
 
     }, [postObject]);
-
-
 
     const onSubmit = (values) => {
 
@@ -49,7 +47,7 @@ function AddEditPost(props) {
         >
             <Modal.Header closeButton backdrop="static" keyboard={'false'}>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    {"Add"} Post
+                {Object.keys(postObject).length > 0 ? "Edit " : "Add "} Post
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -59,8 +57,7 @@ function AddEditPost(props) {
                         initialValues={initialValues}
                         validationSchema={Schema.validationSchema}
                         enableReinitialize={true}>
-                        {({ values, errors, getFieldProps, handleSubmit }) => {
-
+                        {({ values,getFieldProps, handleSubmit }) => {
                             return <Form onSubmit={handleSubmit} noValidate>
                                 <Row className="g-4 p-4">
                                     <Col md={6}>
@@ -91,20 +88,6 @@ function AddEditPost(props) {
                                             <ErrorMessage component="div" name="body" />
                                         </div>
                                     </Col>
-                                    {/* <Col md={6}>
-                                        <div className="forms">
-                                            <Form.Label>User Id</Form.Label>
-                                            <Form.Control
-                                                placeholder="Enter user Id"
-                                                value={values.user_id}
-                                                name="user_id"
-                                                {...getFieldProps("user_id")}
-                                            />
-                                        </div>
-                                        <div className="error--message">
-                                            <ErrorMessage component="div" name="user_id" />
-                                        </div>
-                                    </Col> */}
                                     <Col md={12} className='d-flex justify-content-end'>
                                         <Button className="me-3" variant="secondary" onClick={onHide}>Cancel</Button>
                                         <Button variant="primary" type="submit">Submit</Button>

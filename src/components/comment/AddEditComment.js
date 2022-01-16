@@ -52,7 +52,7 @@ function AddEditTodo(props) {
             >
                 <Modal.Header closeButton backdrop="static" keyboard={'false'}>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        {"Add"} Comment
+                        {Object.keys(postObject).length > 0 ? "Edit " : "Add "} Comment
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

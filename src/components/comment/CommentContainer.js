@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Row, Table, Form } from 'react-bootstrap';
-import Alert from 'react-bootstrap/Alert'
 import { connect } from 'react-redux';
 import AddEditComment from './AddEditComment';
 import ErrorBoundary from '../ErrorBoundary';
@@ -8,6 +7,7 @@ import { resetCommentObject } from '../../redux/comment/commentActions';
 import { deleteCommentItembyId, fetchComments, getCommentItembyId } from '../../redux';
 import { DELETE_SUCCESS_MESSAGE } from '../../common/Utils';
 import Loader from '../../common/Loader';
+import Notifier from '../../common/Notification';
 
 function TodoContainer(props) {
     const { commentData, fetchData, resetEditCommentObject,
@@ -29,11 +29,7 @@ function TodoContainer(props) {
     }, [commentData.posts]);
 
     if (commentData && commentData.loading) { return (<div> <Loader /></div>) }
-    if (commentData.error) {
-        return (<Alert className={""} variant={'danger'}>
-            {commentData.error}
-        </Alert>)
-    }
+    if (commentData.error) { return (<Notifier error={commentData.error} />) }
 
     const onEditPost = ({ id }) => {
         if (id) getCommentbyId(id);
@@ -94,9 +90,7 @@ function TodoContainer(props) {
     return (
         <>
             <ErrorBoundary>
-                {showAlert && <Alert variant={'success'}>
-                    {message}
-                </Alert>}
+                {showAlert && <Notifier success={message} />}
                 <Row className="justify-content-between my-4">
                     <Col xl={3}>
                         <div className="forms__input d-flex align-items-center">
@@ -169,7 +163,7 @@ export default connect(
     (TodoContainer)
 
 
-    function setList(commentData, setCommentList) {
-        const options = commentData.posts.map(e => { return { ...e, value: e.name, label: e.name }; });
-        setCommentList(options);
-    }
+function setList(commentData, setCommentList) {
+    const options = commentData.posts.map(e => { return { ...e, value: e.name, label: e.name }; });
+    setCommentList(options);
+}

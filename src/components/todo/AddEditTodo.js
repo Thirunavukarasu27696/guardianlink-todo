@@ -10,9 +10,10 @@ import Loader from '../../common/Loader';
 
 function AddEditTodo(props) {
     const { onHide, processTodoList } = props;
-    const { postObject = null, loading, posts = [] } = useSelector(state => state.todo);
+    const { postObject = null, loading = true, posts = [] } = useSelector(state => state.todo);
     const dispatch = useDispatch();
-    const [initialValues, setInitialValues] = useState(Schema.initialValues)
+    const [initialValues, setInitialValues] = useState(Schema.initialValues);
+
     useEffect(() => {
         const tempInitialValues = postObject ? {
             title: postObject.title,
@@ -24,7 +25,6 @@ function AddEditTodo(props) {
         if (Object.keys(postObject).length > 0) setInitialValues(tempInitialValues);
 
     }, [postObject]);
-
 
     const dateConverter = (date) => {
         return date ? date.split('T')[0] : '';
@@ -54,7 +54,7 @@ function AddEditTodo(props) {
             >
                 <Modal.Header closeButton backdrop="static" keyboard={'false'}>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        {"Add"} Todo
+                        {Object.keys(postObject).length > 0 ? "Edit " : "Add "} Todo
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

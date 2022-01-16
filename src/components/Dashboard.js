@@ -6,26 +6,31 @@ import ErrorBoundary from './ErrorBoundary';
 import { HttpService } from '../common/HttpService';
 import { urlConstant } from '../common/UrlConst';
 
-function Dashboard(props) {
-
+function Dashboard() {
     const navigate = useNavigate();
     const [clonedCards, setClonedCards] = useState(cardItems);
-
     useEffect(() => {
+        fetchCounts();
+    }, [])
+
+    return (
+        <ErrorBoundary>
+            {renderCards(clonedCards, navigate)}
+        </ErrorBoundary>
+    )
+
+    function fetchCounts() {
         const promise1 = new Promise((resolve, reject) => {
-            HttpService.get(urlConstant.postApiEndPoint).then((res) => {
-            resolve(res.meta.pagination.total)
-            }).catch(reject)
+            const apiEndPoint = urlConstant.postApiEndPoint;
+            getCount(apiEndPoint, resolve, reject);
         });
         const promise2 = new Promise((resolve, reject) => {
-            HttpService.get(urlConstant.todoApiEndPoint).then((res) => {
-                resolve(res.meta.pagination.total)
-                }).catch(reject)
+            const apiEndPoint = urlConstant.todoApiEndPoint;
+            getCount(apiEndPoint, resolve, reject);
         });
         const promise3 = new Promise((resolve, reject) => {
-            HttpService.get(urlConstant.commentApiEndPoint).then((res) => {
-                resolve(res.meta.pagination.total)
-                }).catch(reject)
+            const apiEndPoint = urlConstant.commentApiEndPoint;
+            getCount(apiEndPoint, resolve, reject);
         });
 
         Promise.all([promise1, promise2, promise3]).then((values) => {
@@ -33,27 +38,31 @@ function Dashboard(props) {
             tempData[0].count = values[0];
             tempData[1].count = values[1];
             tempData[2].count = values[2];
-            setClonedCards([...tempData])
+            setClonedCards([...tempData]);
         });
-    }, [])
-
-    return (
-
-        <ErrorBoundary>
-            <Row className="mt-4">
-                {clonedCards.map((item) => (
-                    <Col xl={4} key={item.name}>
-                        <div className='tile' onClick={() => navigate(item.path)}>
-                            <div className='tile-items'>
-                                <h6>{item.name}</h6>
-                                <h1>{item.count}</h1>
-                            </div>
-                        </div>
-                    </Col>
-                ))}
-            </Row>
-        </ErrorBoundary>
-    )
+    }
 }
 
 export default Dashboard
+
+function renderCards(clonedCards, navigate) {
+    return <Row className="mt-4">
+        {clonedCards.map((item) => (
+            <Col xl={4} key={item.name}>
+                <div className='tile' onClick={() => navigate(item.path)}>
+                    <div className='tile-items'>
+                        <h6>{item.name}</h6>
+                        <h1>{item.count}</h1>
+                    </div>
+                </div>
+            </Col>
+        ))}
+    </Row>;
+}
+
+function getCount(apiEndPoint, resolve, reject) {
+    HttpService.get(apiEndPoint).then((res, err) => {
+        resolve(res.meta.pagination.total);
+        reject(err);
+    });
+}

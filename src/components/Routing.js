@@ -25,8 +25,7 @@ function Routing() {
                         <Route path="/post" element={<PostContainer />} />
                         <Route path="/todo" element={<TodoContainer />} />
                         <Route path="/comment" element={<CommentContainer />} />
-                        <Route path="/" element={<Dashboard />} />
-                        <Route element={<PageNotFound />} />
+                        <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </div>
             </div>

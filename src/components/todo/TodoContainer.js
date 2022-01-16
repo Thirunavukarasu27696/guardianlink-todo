@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row, Table } from 'react-bootstrap';
-import Alert from 'react-bootstrap/Alert'
 import { connect } from 'react-redux';
-import AsyncSelect from 'react-select/async';
 import { fetchTodos, resetTodoObject, deleteTodoItembyId, getTodoItembyId } from '../../redux/todo/todoActions';
 import AddEditTodo from './AddEditTodo';
 import ErrorBoundary from '../ErrorBoundary';
 import { DELETE_SUCCESS_MESSAGE } from '../../common/Utils';
-import { HttpService } from '../../common/HttpService';
-import { urlConstant } from '../../common/UrlConst';
 import Loader from '../../common/Loader';
+import Notifier from '../../common/Notification';
 
 function TodoContainer(props) {
     const { todoData, fetchData, resetEditTodoObject,
@@ -29,11 +26,7 @@ function TodoContainer(props) {
     }, [todoData.posts])
 
     if (todoData && todoData.loading) { return (<div> <Loader /></div>) }
-    if (todoData.error) {
-        return (<Alert variant={'danger'}>
-            {todoData.error}
-        </Alert>)
-    }
+    if (todoData.error) { return (<Notifier error={todoData.error} />) };
 
     const onEditPost = ({ id }) => {
         if (id) getTodobyId(id);
@@ -93,18 +86,10 @@ function TodoContainer(props) {
     return (
         <>
             <ErrorBoundary>
-                {showAlert && <Alert variant={'success'}>
-                    {message}
-                </Alert>}
+                {showAlert && <Notifier success={message} />}
                 <Row className="justify-content-between my-4">
                     <Col xl={3}>
                         <div className="forms__input d-flex align-items-center">
-                            {/* <AsyncSelect
-                                isClearable
-                                noOptionsMessage={() => { return null }}
-                                loadOptions={loadOptions}
-                                onInputChange={handleInputChange}
-                            /> */}
                             <Form.Control placeholder='search by title'
                                 onChange={handleSearch}
                             />
@@ -169,7 +154,6 @@ export default connect(
     (TodoContainer)
 
 function setList(todoData, setTodoList) {
-
     const options = todoData.posts.map(e => { return { ...e, value: e.title, label: e.title }; });
     setTodoList(options);
 }

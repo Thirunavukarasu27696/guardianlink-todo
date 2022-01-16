@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert } from 'bootstrap';
+import Notifier from '../common/Notification';
 
 class ErrorBoundary extends Component {
     constructor(props) {
@@ -19,9 +19,8 @@ class ErrorBoundary extends Component {
 
     render() {
         if (this.state.hasError) {
-            return <Alert variant={'danger'}>Something went wrong.</Alert>;
+            return <Notifier error={'Something went wrong.'} />;
         }
-
         return this.props.children;
     }
 }

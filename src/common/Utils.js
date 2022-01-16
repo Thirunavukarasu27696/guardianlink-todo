@@ -4,6 +4,6 @@ export const cardItems = [
     { name: 'Comment', path: '/comment' }
 ]
 
-export const ADD_SUCCESS_MESSAGE = 'Record Added Successfully';
+export const ADD_SUCCESS_MESSAGE = 'Record Inserted Successfully';
 export const EDIT_SUCCESS_MESSAGE = 'Record Updated Successfully';
 export const DELETE_SUCCESS_MESSAGE = 'Record Deleted Successfully';

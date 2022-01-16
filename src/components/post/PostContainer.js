@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row, Table } from 'react-bootstrap';
-import Alert from 'react-bootstrap/Alert'
 import { connect } from 'react-redux';
-import AsyncSelect from 'react-select/async';
 import { fetchPosts, deletePostbyId, getPostbyId, resetPostEditObject } from '../../redux/post/postActions';
 import AddEditPost from './AddEditPost';
 import ErrorBoundary from '../ErrorBoundary';
 import { DELETE_SUCCESS_MESSAGE } from '../../common/Utils';
 import Loader from '../../common/Loader';
+import Notifier from '../../common/Notification';
 
 function PostContainer(props) {
     const { postData, fetchData, resetPostObject,
@@ -28,11 +27,7 @@ function PostContainer(props) {
     }, [postData.posts]);
 
     if (postData && postData.loading) { return (<div> <Loader /></div>) }
-    if (postData.error) {
-        return (<Alert className={""} variant={'danger'}>
-            {postData.error}
-        </Alert>)
-    }
+    if (postData.error) { return (<Notifier error={postData.error} />) }
 
     const onEditPost = ({ id }) => {
         if (id) getPostItembyId(id);
@@ -86,11 +81,10 @@ function PostContainer(props) {
     return (
         <>
             <ErrorBoundary>
-                {showAlert && <Alert variant={'success'}>
-                    {message}
-                </Alert>}
+                {showAlert && <Notifier success={message} />}
+
                 <Row className="justify-content-between my-4">
-                <Col xl={3}>
+                    <Col xl={3}>
                         <div className="forms__input d-flex align-items-center">
                             <Form.Control placeholder='search by title'
                                 onChange={handleSearch}
@@ -119,7 +113,7 @@ function PostContainer(props) {
                                     <span className={'cursor-pointer'} onClick={() => onDeletePost(item)}><i className="bi bi-trash"></i></span>
                                 </td>
                             </tr>) : <tr>
-                                <td colSpan="3" className='text-center py-5'><div>No Match Found ! </div></td>
+                            <td colSpan="3" className='text-center py-5'><div>No Match Found ! </div></td>
                         </tr>}
                     </tbody>
                 </Table>
