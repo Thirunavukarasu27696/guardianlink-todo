@@ -1,0 +1,24 @@
+.tile 
+{
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    background-color: rgba($color: $primary-color, $alpha: .4);
+    padding: 1.5rem;
+    margin: 1rem 0 .5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: 1px solid rgba($color: $primary-color, $alpha: .1);
+    cursor: pointer;
+    h1 
+    {
+        color: $primary-color;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+    h6 
+    {
+        color: rgba($color: $primary-color, $alpha: .7);
+    }
+}

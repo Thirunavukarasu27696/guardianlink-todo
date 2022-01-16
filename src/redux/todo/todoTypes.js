@@ -1,0 +1,11 @@
+
+const ADD_TODO = 'ADD_TODO';
+const EDIT_TODO = 'EDIT_TODO';
+const GET_TODO_BY_ID = 'GET_TODO_BY_ID';
+const DELETE_TODO = 'DELETE_TODO';
+const REST_TODO_OBJECT = 'REST_TODO_OBJECT';
+
+
+export const todoActionsType = {
+    ADD_TODO, DELETE_TODO, EDIT_TODO, GET_TODO_BY_ID, REST_TODO_OBJECT
+}

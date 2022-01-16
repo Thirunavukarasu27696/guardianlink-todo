@@ -1,0 +1,85 @@
+body {
+    font-family: 'Rubik', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.top-nav {
+    height: 80px;
+    background-color: $primary-color;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+
+    img {
+        max-width: 180px;
+        cursor: pointer;
+    }
+
+    padding: 0 2rem;
+}
+
+.sidebar {
+    height: calc(100vh - 84px);
+    max-width: 220px;
+    width: 100%;
+    background-color: $primary-color;
+    position: fixed;
+    margin-top: 4px;
+    top: 84px;
+
+    .menu {
+        &-items {
+            padding: 1rem 0;
+
+            .items {
+                list-style: none;
+                color: #fff;
+                line-height: 2.2;
+                padding: .6rem 0 .4rem 2.7rem;
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+
+
+.layout-body {
+    padding-left: 260px;
+    padding-top: 100px;
+    padding-right: 40px;
+}
+
+.css-1s2u09g-control,
+.react-select__control {
+    min-width: 300px;
+}
+
+.table {
+    tr {
+        th {
+            &:last-child {
+                min-width: 150px;
+
+            }
+        }
+
+        td {
+            min-height: 40px;
+            height: 45px;
+        }
+    }
+}
+
+.modal {
+    &-title {
+        color: $primary-color;
+    }
+}
+
+.cursor-pointer {
+    i {
+        cursor: pointer;
+    }
+}
