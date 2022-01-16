@@ -10,7 +10,7 @@ import Loader from '../../common/Loader';
 
 function AddEditTodo(props) {
     const { onHide, processCommentList } = props;
-    const { postObject = null, loading } = useSelector(state => state.comment);
+    const { postObject = null, loading, posts = [] } = useSelector(state => state.comment);
     const dispatch = useDispatch();
     const [initialValues, setInitialValues] = useState(Schema.initialValues);
 
@@ -35,6 +35,7 @@ function AddEditTodo(props) {
             message = EDIT_SUCCESS_MESSAGE;
         }
         else {
+            if (posts[0].post_id) values.post_id = posts[0].post_id
             dispatch(addComment(values));
             message = ADD_SUCCESS_MESSAGE;
         }
@@ -55,66 +56,66 @@ function AddEditTodo(props) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                {loading ? <Loader /> : 
-                    <Formik onSubmit={onSubmit}
-                        initialValues={initialValues}
-                        validationSchema={Schema.validationSchema}
-                        enableReinitialize={true}>
-                        {({ values, errors, getFieldProps, handleSubmit }) => {
-                            return <Form onSubmit={handleSubmit} noValidate>
-                                <Row className="g-4 p-4">
-                                    <Col md={6}>
-                                        <div className="forms">
-                                            <Form.Label>Name</Form.Label>
-                                            <Form.Control
-                                                placeholder="Enter a name"
-                                                value={values.name}
-                                                name="name"
-                                                {...getFieldProps("name")}
-                                            />
-                                        </div>
-                                        <div className="error--message">
-                                            <ErrorMessage component="div" name="name" />
-                                        </div>
-                                    </Col>
-                                    <Col md={6}>
-                                        <div className="forms">
-                                            <Form.Label>Email</Form.Label>
-                                            <Form.Control
-                                                placeholder="Enter a email"
-                                                value={values.email}
-                                                name="email"
-                                                type="email"
-                                                {...getFieldProps("email")}
-                                            />
-                                        </div>
-                                        <div className="error--message">
-                                            <ErrorMessage component="div" name="email" />
-                                        </div>
-                                    </Col>
-                                    <Col md={6}>
-                                        <div className="forms">
-                                            <Form.Label>Comments</Form.Label>
-                                            <Form.Control aria-label="Default select example"
-                                                placeholder="Enter a comment"
-                                                value={values.body}
-                                                name="body"
-                                                {...getFieldProps("body")}
-                                            />
-                                        </div>
-                                        <div className="error--message">
-                                            <ErrorMessage component="div" name="body" />
-                                        </div>
-                                    </Col>
-                                    <Col md={12} className='d-flex justify-content-end'>
-                                        <Button className="me-3" variant="secondary" onClick={onHide}>Cancel</Button>
-                                        <Button variant="primary" type="submit">Submit</Button>
-                                    </Col>
-                                </Row>
+                    {loading ? <Loader /> :
+                        <Formik onSubmit={onSubmit}
+                            initialValues={initialValues}
+                            validationSchema={Schema.validationSchema}
+                            enableReinitialize={true}>
+                            {({ values, errors, getFieldProps, handleSubmit }) => {
+                                return <Form onSubmit={handleSubmit} noValidate>
+                                    <Row className="g-4 p-4">
+                                        <Col md={6}>
+                                            <div className="forms">
+                                                <Form.Label>Name</Form.Label>
+                                                <Form.Control
+                                                    placeholder="Enter a name"
+                                                    value={values.name}
+                                                    name="name"
+                                                    {...getFieldProps("name")}
+                                                />
+                                            </div>
+                                            <div className="error--message">
+                                                <ErrorMessage component="div" name="name" />
+                                            </div>
+                                        </Col>
+                                        <Col md={6}>
+                                            <div className="forms">
+                                                <Form.Label>Email</Form.Label>
+                                                <Form.Control
+                                                    placeholder="Enter a email"
+                                                    value={values.email}
+                                                    name="email"
+                                                    type="email"
+                                                    {...getFieldProps("email")}
+                                                />
+                                            </div>
+                                            <div className="error--message">
+                                                <ErrorMessage component="div" name="email" />
+                                            </div>
+                                        </Col>
+                                        <Col md={6}>
+                                            <div className="forms">
+                                                <Form.Label>Comments</Form.Label>
+                                                <Form.Control aria-label="Default select example"
+                                                    placeholder="Enter a comment"
+                                                    value={values.body}
+                                                    name="body"
+                                                    {...getFieldProps("body")}
+                                                />
+                                            </div>
+                                            <div className="error--message">
+                                                <ErrorMessage component="div" name="body" />
+                                            </div>
+                                        </Col>
+                                        <Col md={12} className='d-flex justify-content-end'>
+                                            <Button className="me-3" variant="secondary" onClick={onHide}>Cancel</Button>
+                                            <Button variant="primary" type="submit">Submit</Button>
+                                        </Col>
+                                    </Row>
 
-                            </Form>
-                        }}
-                    </Formik>
+                                </Form>
+                            }}
+                        </Formik>
                     }
                 </Modal.Body>
             </Modal>

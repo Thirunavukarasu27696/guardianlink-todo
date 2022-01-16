@@ -10,7 +10,7 @@ import Loader from '../../common/Loader';
 
 function AddEditTodo(props) {
     const { onHide, processTodoList } = props;
-    const { postObject = null, loading } = useSelector(state => state.todo);
+    const { postObject = null, loading, posts = [] } = useSelector(state => state.todo);
     const dispatch = useDispatch();
     const [initialValues, setInitialValues] = useState(Schema.initialValues)
     useEffect(() => {
@@ -31,13 +31,13 @@ function AddEditTodo(props) {
     }
 
     const onSubmit = (values) => {
-        console.log(values)
         let message = '';
         if (values.id) {
             dispatch(editTodo(values));
             message = EDIT_SUCCESS_MESSAGE;
         }
         else {
+            values.user_id = posts[0].user_id;
             dispatch(addTodo(values));
             message = ADD_SUCCESS_MESSAGE;
         }
@@ -58,69 +58,69 @@ function AddEditTodo(props) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {loading ? <Loader /> : 
-                    <Formik onSubmit={onSubmit}
-                        initialValues={initialValues}
-                        validationSchema={Schema.validationSchema}
-                        enableReinitialize={true}>
-                        {({ values, errors, getFieldProps, handleSubmit }) => {
-                            return <Form onSubmit={handleSubmit} noValidate>
-                                <Row className="g-4 p-4">
-                                    <Col md={6}>
-                                        <div className="forms">
-                                            <Form.Label>Todo Title</Form.Label>
-                                            <Form.Control
-                                                placeholder="Enter a title"
-                                                value={values.title}
-                                                name="title"
-                                                {...getFieldProps("title")}
-                                            />
-                                        </div>
-                                        <div className="error--message">
-                                            <ErrorMessage component="div" name="title" />
-                                        </div>
-                                    </Col>
-                                    <Col md={6}>
-                                        <div className="forms">
-                                            <Form.Label>Todo Due Date</Form.Label>
-                                            <Form.Control
-                                                placeholder="Select a date"
-                                                value={values.due_on}
-                                                name="due_on"
-                                                type="date"
-                                                {...getFieldProps("due_on")}
-                                            />
-                                        </div>
-                                        <div className="error--message">
-                                            <ErrorMessage component="div" name="due_on" />
-                                        </div>
-                                    </Col>
-                                    <Col md={6}>
-                                        <div className="forms">
-                                            <Form.Label>Todo Status</Form.Label>
-                                            <Form.Select aria-label="Default select example"
-                                                value={values.status}
-                                                name="status"
-                                                {...getFieldProps("status")}
-                                            >
-                                                <option>Select Todo status</option>
-                                                <option value="pending">pending</option>
-                                                <option value="completed">completed</option>
-                                            </Form.Select>
-                                        </div>
-                                        <div className="error--message">
-                                            <ErrorMessage component="div" name="status" />
-                                        </div>
-                                    </Col>
-                                    <Col md={12} className='d-flex justify-content-end'>
-                                        <Button className="me-3" variant="secondary" onClick={onHide}>Cancel</Button>
-                                        <Button variant="primary" type="submit">Submit</Button>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        }}
+                    {loading ? <Loader /> :
+                        <Formik onSubmit={onSubmit}
+                            initialValues={initialValues}
+                            validationSchema={Schema.validationSchema}
+                            enableReinitialize={true}>
+                            {({ values, errors, getFieldProps, handleSubmit }) => {
+                                return <Form onSubmit={handleSubmit} noValidate>
+                                    <Row className="g-4 p-4">
+                                        <Col md={6}>
+                                            <div className="forms">
+                                                <Form.Label>Todo Title</Form.Label>
+                                                <Form.Control
+                                                    placeholder="Enter a title"
+                                                    value={values.title}
+                                                    name="title"
+                                                    {...getFieldProps("title")}
+                                                />
+                                            </div>
+                                            <div className="error--message">
+                                                <ErrorMessage component="div" name="title" />
+                                            </div>
+                                        </Col>
+                                        <Col md={6}>
+                                            <div className="forms">
+                                                <Form.Label>Todo Due Date</Form.Label>
+                                                <Form.Control
+                                                    placeholder="Select a date"
+                                                    value={values.due_on}
+                                                    name="due_on"
+                                                    type="date"
+                                                    {...getFieldProps("due_on")}
+                                                />
+                                            </div>
+                                            <div className="error--message">
+                                                <ErrorMessage component="div" name="due_on" />
+                                            </div>
+                                        </Col>
+                                        <Col md={6}>
+                                            <div className="forms">
+                                                <Form.Label>Todo Status</Form.Label>
+                                                <Form.Select aria-label="Default select example"
+                                                    value={values.status}
+                                                    name="status"
+                                                    {...getFieldProps("status")}
+                                                >
+                                                    <option>Select Todo status</option>
+                                                    <option value="pending">pending</option>
+                                                    <option value="completed">completed</option>
+                                                </Form.Select>
+                                            </div>
+                                            <div className="error--message">
+                                                <ErrorMessage component="div" name="status" />
+                                            </div>
+                                        </Col>
+                                        <Col md={12} className='d-flex justify-content-end'>
+                                            <Button className="me-3" variant="secondary" onClick={onHide}>Cancel</Button>
+                                            <Button variant="primary" type="submit">Submit</Button>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            }}
 
-                    </Formik>
+                        </Formik>
                     }
                 </Modal.Body>
             </Modal>
