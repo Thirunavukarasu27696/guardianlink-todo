@@ -3,14 +3,11 @@ import { Button, Col, Form, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { fetchPosts, deletePostbyId, getPostbyId, resetPostEditObject } from '../../redux/post/postActions';
 import AddEditPost from './AddEditPost';
-import ErrorBoundary from '../ErrorBoundary';
-import { DELETE_SUCCESS_MESSAGE } from '../../common/Utils';
-import Loader from '../../common/Loader';
-import Notifier from '../../common/Notification';
+import { Loader, Notifier, DELETE_SUCCESS_MESSAGE, ErrorBoundary } from '../../common/CommonExports';
 
 function PostContainer(props) {
     const { postData, fetchData, resetPostObject,
-        deletePost, getPostItembyId, ...rest } = props;
+        deletePost, getPostItembyId } = props;
 
     const [message, setMessage] = useState("");
     const [showAlert, setShowAlert] = useState(false);
@@ -18,12 +15,12 @@ function PostContainer(props) {
     const [postList, setPostList] = useState([]);
     useEffect(() => {
         fetchData();
-        setList(postData, setPostList)
     }, [fetchData, postData.itemCount])
 
 
     useEffect(() => {
         setList(postData, setPostList);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postData.posts]);
 
     if (postData && postData.loading) { return (<div> <Loader /></div>) }
@@ -86,7 +83,7 @@ function PostContainer(props) {
                 <Row className="justify-content-between my-4">
                     <Col xl={3}>
                         <div className="forms__input d-flex align-items-center">
-                            <Form.Control placeholder='search by title'
+                            <Form.Control placeholder='Search by title'
                                 onChange={handleSearch}
                             />
                         </div>

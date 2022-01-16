@@ -1,6 +1,5 @@
 import { todoActionsType } from './todoTypes'
-import { HttpService } from '../../common/HttpService';
-import { urlConstant } from '../../common/UrlConst';
+import { HttpService, urlConstant } from '../../common/CommonExports';
 import { fetchPostsRequest, fetchPostsSuccess, fetchPostsFailure } from '../rootTypes';
 
 

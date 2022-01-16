@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { cardItems } from '../common/Utils';
-import ErrorBoundary from './ErrorBoundary';
-import { HttpService } from '../common/HttpService';
-import { urlConstant } from '../common/UrlConst';
+import { urlConstant, HttpService, ErrorBoundary, cardItems } from '../common/CommonExports';
 
 function Dashboard() {
     const navigate = useNavigate();
     const [clonedCards, setClonedCards] = useState(cardItems);
     useEffect(() => {
         fetchCounts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

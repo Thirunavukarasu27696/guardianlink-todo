@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Notifier from '../common/Notification';
+import { Notifier } from '../common/CommonExports';
 
 class ErrorBoundary extends Component {
     constructor(props) {

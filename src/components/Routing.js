@@ -11,7 +11,8 @@ import PostContainer from './post/PostContainer';
 import TodoContainer from './todo/TodoContainer';
 import PageNotFound from './PageNotFound';
 import brand from './../assets/images/guardianlink_logo.svg'
-import { cardItems } from '../common/Utils';
+import { cardItems } from '../common/CommonExports';
+
 function Routing() {
 
     return (
@@ -25,6 +26,7 @@ function Routing() {
                         <Route path="/post" element={<PostContainer />} />
                         <Route path="/todo" element={<TodoContainer />} />
                         <Route path="/comment" element={<CommentContainer />} />
+                        <Route path="/" element={<Dashboard />} />
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </div>

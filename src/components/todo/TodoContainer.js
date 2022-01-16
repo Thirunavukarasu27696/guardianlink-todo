@@ -3,10 +3,8 @@ import { Button, Col, Form, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { fetchTodos, resetTodoObject, deleteTodoItembyId, getTodoItembyId } from '../../redux/todo/todoActions';
 import AddEditTodo from './AddEditTodo';
-import ErrorBoundary from '../ErrorBoundary';
-import { DELETE_SUCCESS_MESSAGE } from '../../common/Utils';
-import Loader from '../../common/Loader';
-import Notifier from '../../common/Notification';
+import { Loader, Notifier, DELETE_SUCCESS_MESSAGE, ErrorBoundary } from '../../common/CommonExports';
+
 
 function TodoContainer(props) {
     const { todoData, fetchData, resetEditTodoObject,
@@ -23,6 +21,7 @@ function TodoContainer(props) {
 
     useEffect(() => {
         setList(todoData, setTodoList);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [todoData.posts])
 
     if (todoData && todoData.loading) { return (<div> <Loader /></div>) }
@@ -90,7 +89,7 @@ function TodoContainer(props) {
                 <Row className="justify-content-between my-4">
                     <Col xl={3}>
                         <div className="forms__input d-flex align-items-center">
-                            <Form.Control placeholder='search by title'
+                            <Form.Control placeholder='Search by title'
                                 onChange={handleSearch}
                             />
                         </div>

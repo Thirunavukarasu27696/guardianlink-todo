@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Button, Col, Row, Table, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import AddEditComment from './AddEditComment';
-import ErrorBoundary from '../ErrorBoundary';
 import { resetCommentObject } from '../../redux/comment/commentActions';
 import { deleteCommentItembyId, fetchComments, getCommentItembyId } from '../../redux';
-import { DELETE_SUCCESS_MESSAGE } from '../../common/Utils';
-import Loader from '../../common/Loader';
-import Notifier from '../../common/Notification';
+import { Loader, Notifier, DELETE_SUCCESS_MESSAGE, ErrorBoundary } from '../../common/CommonExports';
+
 
 function TodoContainer(props) {
     const { commentData, fetchData, resetEditCommentObject,
@@ -26,6 +24,7 @@ function TodoContainer(props) {
 
     useEffect(() => {
         setList(commentData, setCommentList);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [commentData.posts]);
 
     if (commentData && commentData.loading) { return (<div> <Loader /></div>) }
@@ -94,7 +93,7 @@ function TodoContainer(props) {
                 <Row className="justify-content-between my-4">
                     <Col xl={3}>
                         <div className="forms__input d-flex align-items-center">
-                            <Form.Control placeholder='search by name'
+                            <Form.Control placeholder='Search by Name'
                                 onChange={handleSearch}
                             />
                         </div>

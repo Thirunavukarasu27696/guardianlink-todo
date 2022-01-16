@@ -1,6 +1,5 @@
 import { PostActionsType } from './postTypes'
-import { HttpService } from '../../common/HttpService';
-import { urlConstant } from '../../common/UrlConst';
+import { HttpService, urlConstant } from '../../common/CommonExports';
 import { fetchPostsRequest, fetchPostsSuccess, fetchPostsFailure } from '../rootTypes';
 
 
